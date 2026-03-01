@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Timetable</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <header>
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="header-text">
+                <h1>My Timetable</h1>
+                <p id="headerDate" class="header-date"></p>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="stats" id="statsBar">
+                <div class="stat-item">
+                    <i class="fas fa-bookmark"></i>
+                    <span id="entryCount">0</span> entries
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-clock"></i>
+                    <span id="totalHours">0</span> hrs/week
+                </div>
+            </div>
+            <button id="clearAllBtn" class="btn btn-ghost" title="Clear All">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+            <button id="addEntryBtn" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add Entry
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state hidden">
+            <div class="empty-icon"><i class="fas fa-calendar-plus"></i></div>
+            <h2>No entries yet</h2>
+            <p>Click <strong>"+ Add Entry"</strong> or click any time slot to get started!</p>
+        </div>
+
+        <div class="timetable-container" id="timetableContainer">
+            <table id="timetable">
+                <thead>
+                    <tr>
+                        <th class="time-col"><i class="fas fa-clock"></i></th>
+                        <th data-day="0">Mon</th>
+                        <th data-day="1">Tue</th>
+                        <th data-day="2">Wed</th>
+                        <th data-day="3">Thu</th>
+                        <th data-day="4">Fri</th>
+                        <th data-day="5">Sat</th>
+                        <th data-day="6">Sun</th>
+                    </tr>
+                </thead>
+                <tbody id="timetableBody"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"><i class="fas fa-plus-circle"></i> Add Entry</h2>
+                <button type="button" id="closeModalBtn" class="modal-close"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="entryForm">
+                <div class="form-group">
+                    <label for="entryTitle"><i class="fas fa-heading"></i> Title</label>
+                    <input type="text" id="entryTitle" placeholder="e.g. Mathematics, Gym, Meeting..." required>
+                </div>
+                <div class="form-group">
+                    <label for="entryDay"><i class="fas fa-calendar-day"></i> Day</label>
+                    <select id="entryDay" required>
+                        <option value="">Select a day</option>
+                        <option value="0">Monday</option>
+                        <option value="1">Tuesday</option>
+                        <option value="2">Wednesday</option>
+                        <option value="3">Thursday</option>
+                        <option value="4">Friday</option>
+                        <option value="5">Saturday</option>
+                        <option value="6">Sunday</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="entryStart"><i class="fas fa-hourglass-start"></i> Start</label>
+                        <select id="entryStart" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="entryEnd"><i class="fas fa-hourglass-end"></i> End</label>
+                        <select id="entryEnd" required></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="entryLocation"><i class="fas fa-map-marker-alt"></i> Location</label>
+                    <input type="text" id="entryLocation" placeholder="e.g. Room 101, Lab 3...">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-palette"></i> Color</label>
+                    <div class="color-options" id="colorOptions">
+                        <button type="button" class="color-swatch" data-color="#6366f1" style="background:linear-gradient(135deg,#6366f1,#818cf8)" title="Indigo"></button>
+                        <button type="button" class="color-swatch" data-color="#ef4444" style="background:linear-gradient(135deg,#ef4444,#f87171)" title="Red"></button>
+                        <button type="button" class="color-swatch" data-color="#10b981" style="background:linear-gradient(135deg,#10b981,#34d399)" title="Emerald"></button>
+                        <button type="button" class="color-swatch" data-color="#f59e0b" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)" title="Amber"></button>
+                        <button type="button" class="color-swatch" data-color="#8b5cf6" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa)" title="Violet"></button>
+                        <button type="button" class="color-swatch" data-color="#06b6d4" style="background:linear-gradient(135deg,#06b6d4,#22d3ee)" title="Cyan"></button>
+                        <button type="button" class="color-swatch" data-color="#ec4899" style="background:linear-gradient(135deg,#ec4899,#f472b6)" title="Pink"></button>
+                        <button type="button" class="color-swatch" data-color="#64748b" style="background:linear-gradient(135deg,#64748b,#94a3b8)" title="Slate"></button>
+                        <button type="button" class="color-swatch" data-color="#0ea5e9" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8)" title="Sky"></button>
+                        <button type="button" class="color-swatch" data-color="#d946ef" style="background:linear-gradient(135deg,#d946ef,#e879f9)" title="Fuchsia"></button>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="deleteBtn" class="btn btn-danger hidden">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                    <div class="form-actions-right">
+                        <button type="button" id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
