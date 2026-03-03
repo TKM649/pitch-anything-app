@@ -1738,6 +1738,10 @@ body {
 }
 
 @media (max-width: 768px) {
+    .app {
+        flex-direction: column;
+    }
+
     .mobile-header {
         display: flex;
     }
@@ -1747,6 +1751,7 @@ body {
         top: 0;
         left: 0;
         bottom: 0;
+        width: var(--sidebar-width);
         transform: translateX(-100%);
         box-shadow: var(--shadow-xl);
     }
@@ -1759,7 +1764,13 @@ body {
         padding: 1rem;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        height: calc(100vh - 56px);
+        width: 100%;
+        max-width: 100%;
+        flex: 1;
+    }
+
+    .chapter-header {
+        text-align: center;
     }
 
     .chapter-header h1 {
