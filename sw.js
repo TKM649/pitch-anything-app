@@ -1,5 +1,5 @@
 // ===== Pitch Anything — Service Worker =====
-const CACHE_NAME = 'pitch-anything-v1';
+const CACHE_NAME = 'pitch-anything-v2';
 
 // Files to cache for offline use
 const ASSETS_TO_CACHE = [
@@ -8,14 +8,14 @@ const ASSETS_TO_CACHE = [
     './css/style.css',
     './js/app.js',
     './manifest.json',
-    './icons/icon-72.svg',
-    './icons/icon-96.svg',
-    './icons/icon-128.svg',
-    './icons/icon-144.svg',
-    './icons/icon-152.svg',
-    './icons/icon-192.svg',
-    './icons/icon-384.svg',
-    './icons/icon-512.svg',
+    './icons/icon-72.png',
+    './icons/icon-96.png',
+    './icons/icon-128.png',
+    './icons/icon-144.png',
+    './icons/icon-152.png',
+    './icons/icon-192.png',
+    './icons/icon-384.png',
+    './icons/icon-512.png',
 ];
 
 // External CDN resources — cache when first fetched

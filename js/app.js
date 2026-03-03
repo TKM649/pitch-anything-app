@@ -1489,12 +1489,6 @@ function closeSidebar() {
     DOM.sidebarOverlay.classList.remove('visible');
 }
 
-function closeSidebar() {
-    state.sidebarOpen = false;
-    DOM.sidebar.classList.remove('open');
-    DOM.sidebarOverlay.classList.remove('visible');
-}
-
 // ==========================================================
 //  RENDERING — Sidebar Navigation
 // ==========================================================
@@ -1811,8 +1805,18 @@ function showQuizResults(chapterIdx) {
     else if (pct >= 50) { grade = 'Theek Hai';    gradeClass = 'okay'; }
     else                { grade = 'Aur Seekho'; gradeClass = 'poor'; }
 
+    // Auto-complete chapter when quiz is done (any score)
+    if (!state.completed.includes(chapterIdx)) {
+        state.completed.push(chapterIdx);
+        saveProgress();
+        renderChapterNav();
+        updateProgressUI();
+    }
+
     const body = document.getElementById('quizBody');
     if (!body) return;
+
+    const isCompleted = state.completed.includes(chapterIdx);
 
     body.innerHTML = `
         <div class="quiz-results">
@@ -1822,8 +1826,10 @@ function showQuizResults(chapterIdx) {
             </div>
             <h3>${grade}</h3>
             <p>Tumne ${quiz.title} mein ${quiz.questions.length} mein se ${qs.score} sahi kiye.</p>
+            <p style="color:var(--accent);font-weight:600;margin-top:0.5rem;"><i class="fas fa-check-circle"></i> Chapter complete ho gaya!</p>
             <button class="quiz-btn quiz-btn-secondary" id="quizRetry"><i class="fas fa-redo"></i> Dobara Try Karo</button>
-            ${!state.completed.includes(chapterIdx) ? `<button class="quiz-btn quiz-btn-primary" id="quizComplete" style="margin-left:0.5rem;"><i class="fas fa-check"></i> Chapter Complete Karo</button>` : ''}
+            ${state.currentChapter < CHAPTERS.length - 1 ? `<button class="quiz-btn quiz-btn-primary" id="quizNextCh" style="margin-left:0.5rem;"><i class="fas fa-arrow-right"></i> Agla Chapter</button>` : ''}
+        </div>`;
         </div>`;
 
     // Wire retry
@@ -1834,12 +1840,15 @@ function showQuizResults(chapterIdx) {
         showQuizQuestion(chapterIdx, 0);
     });
 
-    // Wire complete
-    const compBtn = document.getElementById('quizComplete');
-    if (compBtn) compBtn.addEventListener('click', () => completeChapter(chapterIdx));
+    // Wire next chapter
+    const nextChBtn = document.getElementById('quizNextCh');
+    if (nextChBtn) nextChBtn.addEventListener('click', () => {
+        navigateToChapter(chapterIdx + 1);
+    });
 
-    // If good score, auto-confetti
-    if (pct >= 70) launchConfetti();
+    // Confetti + toast
+    launchConfetti();
+    showToast(`Chapter ${chapterIdx + 1} complete ho gaya!`, 'success');
 }
 
 // ==========================================================
