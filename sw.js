@@ -1,5 +1,5 @@
 // ===== Pitch Anything — Service Worker =====
-const CACHE_NAME = 'pitch-anything-v2';
+const CACHE_NAME = 'pitch-anything-v3';
 
 // Files to cache for offline use
 const ASSETS_TO_CACHE = [
@@ -62,16 +62,27 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(request).then((cachedResponse) => {
             if (cachedResponse) {
+                // Return cache but also update in background
+                const fetchPromise = fetch(request).then((networkResponse) => {
+                    if (networkResponse && networkResponse.status === 200) {
+                        const responseClone = networkResponse.clone();
+                        caches.open(CACHE_NAME).then((cache) => {
+                            cache.put(request, responseClone);
+                        });
+                    }
+                    return networkResponse;
+                }).catch(() => cachedResponse);
+
                 return cachedResponse;
             }
 
             return fetch(request)
                 .then((networkResponse) => {
-                    // Cache CDN resources and valid responses
+                    // Cache valid responses
                     if (
                         networkResponse &&
                         networkResponse.status === 200 &&
-                        (request.url.startsWith('http') )
+                        (request.url.startsWith('http'))
                     ) {
                         const responseClone = networkResponse.clone();
                         caches.open(CACHE_NAME).then((cache) => {
