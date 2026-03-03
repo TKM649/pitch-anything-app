@@ -1830,7 +1830,6 @@ function showQuizResults(chapterIdx) {
             <button class="quiz-btn quiz-btn-secondary" id="quizRetry"><i class="fas fa-redo"></i> Dobara Try Karo</button>
             ${state.currentChapter < CHAPTERS.length - 1 ? `<button class="quiz-btn quiz-btn-primary" id="quizNextCh" style="margin-left:0.5rem;"><i class="fas fa-arrow-right"></i> Agla Chapter</button>` : ''}
         </div>`;
-        </div>`;
 
     // Wire retry
     const retryBtn = document.getElementById('quizRetry');
