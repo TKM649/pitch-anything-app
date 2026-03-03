@@ -1669,10 +1669,17 @@ function renderTakeawaysSection(sec) {
         </div>`;
 }
 
+/** Render examples section */
+function renderExamplesSection(sec) {
+    const itemsHTML = sec.items.map(ex => '<div class="example-card"><h4><i class="fas fa-bookmark"></i> ' + ex.title + '</h4><p>' + ex.desc + '</p></div>').join("");
+    return '<div class="section-card"><div class="section-title">' + sec.title + '</div><div class="examples-grid">' + itemsHTML + '</div></div>';
+}
+
 /** Dispatch section rendering by type */
 function renderSection(sec, idx) {
     switch (sec.type) {
         case 'text':       return renderTextSection(sec);
+        case 'examples':   return renderExamplesSection(sec);
         case 'steps':      return renderStepsSection(sec);
         case 'flipcards':  return renderFlipcardsSection(sec);
         case 'scenario':   return renderScenarioSection(sec, idx);
@@ -2042,7 +2049,9 @@ function boot() {
     DOM.sidebarOverlay.addEventListener('click', closeSidebar);
 
     // Reset button
-    DOM.resetBtn.addEventListener('click', resetProgress);
+        DOM.resetBtn.addEventListener('click', resetProgress);
+    if(DOM.flashcardsBtn) DOM.flashcardsBtn.addEventListener('click', renderMasterFlashcards);
+    if(DOM.pitchBuilderBtn) DOM.pitchBuilderBtn.addEventListener('click', renderPitchBuilder);
 
     // Build sidebar nav
     renderChapterNav();
