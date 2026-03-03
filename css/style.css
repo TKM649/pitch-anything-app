@@ -1689,6 +1689,7 @@ body {
 
 .welcome-ch-card {
     padding: 1.25rem;
+    min-height: 60px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -1756,6 +1757,9 @@ body {
 
     .main-content {
         padding: 1rem;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        height: calc(100vh - 56px);
     }
 
     .chapter-header h1 {

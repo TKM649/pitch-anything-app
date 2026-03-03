@@ -2036,15 +2036,6 @@ function boot() {
     // Load saved progress
     loadProgress();
 
-    // Splash screen
-    DOM.startBtn.addEventListener('click', () => {
-        DOM.splashScreen.classList.add('fade-out');
-        setTimeout(() => {
-            DOM.splashScreen.style.display = 'none';
-            DOM.app.classList.remove('hidden');
-        }, 600);
-    });
-
     // Mobile sidebar
     DOM.menuToggle.addEventListener('click', () => {
         state.sidebarOpen ? closeSidebar() : openSidebar();
@@ -2060,17 +2051,19 @@ function boot() {
 
     // Show welcome or last chapter
     if (state.currentChapter !== null && state.currentChapter >= 0) {
-        // If returning user, skip splash
+        // Returning user — skip splash
         DOM.splashScreen.style.display = 'none';
         DOM.app.classList.remove('hidden');
         renderChapter(state.currentChapter);
     } else {
-        // Fresh user — splash will show, then welcome
-        DOM.app.classList.remove('hidden');
-        DOM.app.style.display = 'none'; // hidden until splash done
+        // Fresh user — splash shown; on button tap go directly to Chapter 1
         DOM.startBtn.addEventListener('click', () => {
-            DOM.app.style.display = '';
-            renderWelcome();
+            DOM.splashScreen.classList.add('fade-out');
+            setTimeout(() => {
+                DOM.splashScreen.style.display = 'none';
+                DOM.app.classList.remove('hidden');
+                navigateToChapter(0);
+            }, 600);
         }, { once: true });
     }
 }
