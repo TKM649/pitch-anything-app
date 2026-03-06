@@ -1,5 +1,5 @@
 // ===== Pitch Anything — Service Worker =====
-const CACHE_NAME = 'pitch-anything-v8';
+const CACHE_NAME = 'pitch-anything-v9';
 
 // Files to cache for offline use
 const ASSETS_TO_CACHE = [
