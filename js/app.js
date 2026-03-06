@@ -63,11 +63,13 @@ const CHAPTER_COLORS = [
 // Each chapter: { title, subtitle, icon, sections[], quiz }
 // Sections support types: text, steps, flipcards, scenario, comparison, brain, dialogue, takeaways
 const CHAPTERS = [
-    // --- Chapter 1 ---
+        // --- Chapter 1 ---
     {
+        chapterId: 1,
         title: 'The Method',
         subtitle: 'Pitching kyun fail hoti hai aur STRONG method kaise fix karta hai.',
         icon: 'fas fa-bullseye',
+        duration: '15 min read',
         sections: [
             {
                 type: 'text',
@@ -79,151 +81,54 @@ const CHAPTERS = [
                 `
             },
             {
-                type: 'brain',
-                title: '<i class="fas fa-brain"></i> Teen Brain Layers — Har Layer Pe Click Karo',
-                layers: [
-                    {
-                        name: 'Neocortex',
-                        cssClass: 'neocortex',
-                        shortDesc: 'Problem-solving aur reasoning',
-                        detail: 'Neocortex brain ka sabse evolved hissa hai. Yeh complex thinking, language, logic, aur abstract reasoning handle karta hai. Yahan AAP apni pitch banate ho — lekin yeh woh jagah NAHI hai jahan audience pehle process karti hai. Sender (neocortex) aur receiver (croc brain) ke beech ka mismatch — yahi #1 reason hai pitches fail hone ka.'
-                    },
-                    {
-                        name: 'Midbrain',
-                        cssClass: 'midbrain',
-                        shortDesc: 'Meaning aur social context',
-                        detail: 'Midbrain cheezon ka matlab aur social situations decide karta hai. Yeh puchta hai: "Mere liye iska kya matlab hai? Social context kya hai?" Agar aapka message croc brain se guzar jaye, toh midbrain usse significance assign karta hai. Yeh survival instincts aur higher-order thought ke beech ka bridge hai.'
-                    },
-                    {
-                        name: 'Crocodile Brain',
-                        cssClass: 'croc',
-                        shortDesc: 'Survival — fight, flight, ya ignore',
-                        detail: 'Croc brain gatekeeper hai. Yeh 5 million saal se hai aur simple rules pe chalta hai: ignore karo, bhaago, ya lado. Yeh strong, basic emotions generate karta hai. Agar aapki pitch boredom ya complexity trigger karti hai, toh croc brain isse code karta hai "na threat hai, na interesting" aur filter kar deta hai PEHLE se hi — brain ke higher functions tak pahunchne se pehle.'
-                    }
-                ]
-            },
-            {
-                type: 'text',
-                title: '<i class="fas fa-key"></i> Sabse Zaroori Insight',
-                content: `
-                    <p><strong>Aap apni pitch apne neocortex mein banate ho, lekin audience usse apne croc brain mein receive karti hai.</strong></p>
-                    <p>Yeh fundamental mismatch hai jo zyada tar pitches fail karata hai. Succeed karne ke liye aapko ek aisa method chahiye jo pehle croc brain se seedha baat kare — aur phir aapke big idea ko upar neocortex tak jaane de analytical processing ke liye.</p>
-                `
-            },
-            {
-                type: 'steps',
-                title: '<i class="fas fa-list-ol"></i> STRONG Method — 6 Steps',
-                steps: [
-                    {
-                        icon: 'fas fa-crosshairs',
-                        label: 'S — Set the Frame (Frame Set Karo)',
-                        desc: 'Har social encounter mein frames collide hote hain. Aapko APNA frame set karna hai taaki narrative shuru se aapke control mein rahe.'
-                    },
-                    {
-                        icon: 'fas fa-clock',
-                        label: 'T — Tell the Story (Kahani Sunao)',
-                        desc: 'Ek compelling kahani sunao jismein tension aur intrigue ho taaki croc brain engaged rahe. Kahaniyaan analytical filters ko bypass karti hain.'
-                    },
-                    {
-                        icon: 'fas fa-bolt',
-                        label: 'R — Reveal the Intrigue (Raaz Dikhao)',
-                        desc: 'Information gaps create karo jo audience ko aage jhukne par majboor kare. Novelty aur curiosity croc brain ke "ignore" response ko hara dete hain.'
-                    },
-                    {
-                        icon: 'fas fa-hand-paper',
-                        label: 'O — Offer the Prize (Khud Ko Prize Banao)',
-                        desc: 'Apne aap ko prize position karo, supplicant (minnat karne wala) nahi. Audience ko feel hona chahiye ki unhe AAPKE liye qualify karna hai.'
-                    },
-                    {
-                        icon: 'fas fa-anchor',
-                        label: 'N — Nail the Hook Point (Hook Jam Do)',
-                        desc: 'Hot cognition frames stack karo (desire, tension, time pressure) taaki audience emotionally decide kare, analytically nahi.'
-                    },
-                    {
-                        icon: 'fas fa-handshake',
-                        label: 'G — Get the Deal (Deal Pakdo)',
-                        desc: 'Bina needy hue close karo. Sahi waqt par withdraw karo taaki target deal ke peeche bhaage, tum nahi.'
-                    }
-                ]
-            },
-            {
-                type: 'scenario',
-                title: '<i class="fas fa-theater-masks"></i> Quick Scenario',
-                prompt: 'Aap investors ke room mein 5 minute se pitch kar rahe ho. Unme se ek apna phone nikal ke scroll karne lagta hai. Aap kya karoge?',
-                options: [
-                    { text: 'Zyada zor se bolo aur aur data add karo attention wapas laane ke liye.', correct: false },
-                    { text: 'Ignore karo — kuch log aise hi hote hain.', correct: false },
-                    { text: 'Ek achanak pattern interrupt introduce karo novelty ke saath taaki croc brain wapas engage ho.', correct: true },
-                    { text: 'Politely kaho phone rakh do.', correct: false },
-                ],
-                correctIndex: 2,
-                feedbackCorrect: 'Bilkul sahi! Croc brain ko novelty chahiye. Pattern interrupt — ek surprising statement, tone mein shift, ya unexpected visual — attention wapas jhatke se laata hai. Aur data dena problem aur bura banata hai.',
-                feedbackWrong: 'Sahi nahi hai. Croc brain already tune out ho chuka hai. Aur data, ignore karna, ya confrontation — koi bhi root cause fix nahi karega. Aapko <strong>pattern interrupt</strong> chahiye — kuch novel aur unexpected jo croc brain ke attention filters ko wapas engage kare.'
-            },
-            {
-                type: 'flipcards',
-                title: '<i class="fas fa-clone"></i> Key Concepts — Tap Karke Flip Karo',
-                cards: [
-                    { front: 'Croc Brain', icon: 'fas fa-dragon', back: '<strong>Gatekeeper.</strong> Primitive brain jo har message filter karta hai. Agar boring ya complex hai, toh croc brain usse maar deta hai neocortex ke dekhne se pehle.' },
-                    { front: 'Frame', icon: 'fas fa-border-all', back: '<strong>Ek mental structure</strong> duniya ko dekhne ka. Har meeting mein frames collide hote hain. Sirf ek frame bachta hai — jiska frame jeeta, woh interaction control karta hai.' },
-                    { front: 'Novelty', icon: 'fas fa-star', back: '<strong>Croc brain ki kamzori.</strong> Jo naya aur alag hai usse ignore nahi kar sakta. Novelty aapka primary weapon hai survival-mode filtering ko todne ke liye.' },
-                    { front: 'STRONG', icon: 'fas fa-fist-raised', back: '<strong>Set the frame, Tell the story, Reveal intrigue, Offer the prize, Nail the hook, Get the deal.</strong> Neurofinance-based pitching ka 6-step method.' },
-                ]
-            },
-            {
-                type: 'takeaways',
-                title: '<i class="fas fa-check-double"></i> Chapter 1 Ke Key Takeaways',
+                type: 'examples',
+                title: 'Real-Life Examples: Croc Brain in Action',
                 items: [
-                    'Aapki pitch neocortex mein banti hai lekin croc brain mein receive hoti hai — yeh gap bridge karo.',
-                    'Croc brain ke teen responses hain: ignore, run, ya fight. Boring = ignored.',
-                    'Novelty, tension, aur high-contrast information croc brain ka filter bypass karti hai.',
-                    'STRONG method aapko step-by-step framework deta hai pitch karne ka — brain jaise actually kaam karta hai waise.',
-                    'Frame control foundation hai — jo frame control karta hai, woh conversation control karta hai.',
+                    { title: "VC Metting mein 'Data Dump'", desc: "Ek founder ne apne 50-page financial projections shuru mein hi dikha diye. Invester bore ho gaya kyuki 'Croc Brain' ko lagta hai 'yeh complex hai, ise reject karo'." },
+                    { title: "The 'Change of Pace'", desc: "Pitch ke beech mein suddenly ek ajeeb sa unexpected sawaal puchna. Jaise 'Aapko lagta hai hum successful honge? Mujhe abhi lag raha hai nahi honge'. Croc brain turant alert ho jayega." },
+                    { title: "Contrast Create Karna", desc: "Before aur After dikhana. 'Abhi humari loss $1M hai, next year $10M profit hogi'. Croc brain ko high-contrast bohot pasand hai." },
+                    { title: "Surprise Element", desc: "Normal pitch deck ki jagah, ek physical prototype unke haath mein de do. Tactile feedback Croc brain ko engage karta hai." },
+                    { title: "Time Constraint", desc: "'Mere paas sirf 20 minute hain, aur mujhe aapke sirf 10 minute chahiye'. Yeh scarcity create karta hai, jo Croc brain ko trigger karta hai ki 'isko dhyan se suno, time kam hai'." },
+                    { title: "Humor aur Threat", desc: "Halka sa mazak jo thodi authority show kare. 'Aap chahein toh is deal ko ignore kar sakte hain, par aapke competitors ko main kal hi mil raha hu'." }
                 ]
             },
+            {
+                type: 'framework',
+                title: '<i class="fas fa-layer-group"></i> STRONG Framework',
+                steps: [
+                    { letter: 'S', title: 'Set the Frame', desc: 'Situation par control establish karna (Frame control hum Chapter 2 mein detail mein seekhenge).' },
+                    { letter: 'T', title: 'Tell the Story', desc: 'Narrative jo listener ke emotions aur survival instincts ko engage kare.' },
+                    { letter: 'R', title: 'Reveal the Intrigue', desc: 'Curiosity paida karna — sab kuch turant mat batao.' },
+                    { letter: 'O', title: 'Offer the Prize', desc: 'Listener ko yeh realize karwana ki deal (app) aap hain, unka paisa nahi.' },
+                    { letter: 'N', title: 'Nail the Hookpoint', desc: 'Woh moment jab unka hot cognition trigger hota hai aur wo physically aage badh aate hain.' },
+                    { letter: 'G', title: 'Get the Deal', desc: 'Pitch ko close karne ke liye high status maintain karna.' }
+                ]
+            }
         ],
-        quiz: {
-            title: 'Chapter 1 Quiz',
-            questions: [
-                {
-                    question: 'Listener SABSE PEHLE aapki pitch kahan process karta hai?',
-                    options: ['Neocortex', 'Midbrain', 'Crocodile brain', 'Prefrontal cortex'],
-                    correct: 2,
-                    explanation: 'Har incoming message sabse pehle crocodile brain — sabse primitive filter — pe lagti hai. Agar yeh pass nahi hota, toh neocortex kabhi evaluate hi nahi karta.'
-                },
-                {
-                    question: 'STRONG mein "S" ka kya matlab hai?',
-                    options: ['Start the conversation', 'Set the Frame', 'Show the data', 'Sell the idea'],
-                    correct: 1,
-                    explanation: '"S" ka matlab hai Set the Frame. Framing sabse pehla aur sabse critical step hai — yeh decide karta hai ki interaction kaun control karega.'
-                },
-                {
-                    question: 'Croc brain ki sabse badi kamzori kya hai jo pitcher exploit kar sakta hai?',
-                    options: ['Detailed analysis', 'Emotional appeals', 'Novelty', 'Authority'],
-                    correct: 2,
-                    explanation: 'Croc brain jo novel hai usse ignore nahi kar sakta. Nayi, unexpected, high-contrast information hamesha filter ke through nikal jaati hai.'
-                },
-                {
-                    question: 'Klaff ke according zyada tar pitches kyun fail hoti hain?',
-                    options: [
-                        'Slides kam hain',
-                        'Pitcher ka neocortex listener ke croc brain ko bhejta hai — yeh mismatch hai',
-                        'Bad product market fit',
-                        'Presentation bohot short hai'
-                    ],
-                    correct: 1,
-                    explanation: 'Fundamental mismatch: aap apna message advanced neocortex se banate ho, lekin listener usse primitive croc brain se receive karta hai, jo complexity aur boredom ko filter kar deta hai.'
-                },
-                {
-                    question: 'In mein se konsa croc brain ka default response NAHI hai?',
-                    options: ['Ignore karo', 'Deeply analyze karo', 'Bhaago', 'Lado'],
-                    correct: 1,
-                    explanation: 'Croc brain deep analysis nahi karta — woh neocortex ka kaam hai. Croc brain milliseconds mein decide karta hai: ignore, run, ya fight.'
-                },
-            ]
-        },
+        quiz: [
+            { question: "Listener SABSE PEHLE aapki pitch kahan process karta hai?", options: ["Neocortex", "Midbrain", "Croc brain", "Prefrontal cortex"], correct: 2, explanation: "Croc brain sabse purana aur primitive part hai jo nayi information ka first filter hota hai." },
+            { question: "Croc brain kis type ki information ko REJECT karta hai?", options: ["High contrast", "New and novel", "Complex logic and details", "Visual threats"], correct: 2, explanation: "Croc brain complex details (like numbers) bhejte hi bore ho jata hai aur message reject kar deta hai." },
+            { question: "STRONG framework mein 'S' ka matlab kya hai?", options: ["Sell the idea", "Set the Frame", "Show the money", "Seek consensus"], correct: 1, explanation: "'S' ka matlab hai Set the Frame, yani interaction ka context aur power dynamics control karna." },
+            { question: "Pitch ka target audience ke brain ka kaunsa part hona chahiye (initially)?", options: ["Neocortex", "Midbrain", "Croc brain", "Prefrontal Cortex"], correct: 2, explanation: "Pehle Croc brain ka attention jeetna padta hai tabhi information aage jati hai." },
+            { question: "Prizing ka main concept kya hai?", options: ["Discount dena", "Aap khud ek prize hain", "Unko bribe dena", "Saste mein deal karna"], correct: 1, explanation: "Offer the prize ka matlab hai unhe feel karana ki aap main prize hain, unka paisa nahi." },
+            { question: "Croc brain ki prime job kya hai?", options: ["Math solve karna", "Survival", "Friendship banana", "Daya dikhana"], correct: 1, explanation: "Croc brain ka kaam hai threat detect karna aur survival ko ensure karna." },
+            { question: "Pitching mei problem kya hai?", options: ["Zyada log logical pitch karte hai", "Kam bolte hai", "Zor se bolte hai", "Bohaut haste hai"], correct: 0, explanation: "Oren kahte hai ki log initially logical parts target karte hai jabki unhe croc brain target karna chahiye." },
+            { question: "Information dump kahan fail hota hai?", options: ["Neocortex mein", "Midbrain mein", "Croc brain mein filter out hota hai", "Spinal cord mein"], correct: 2, explanation: "Croc brain complex info ko directly reject kar deta hai." },
+            { question: "Croc brain ko kaise engage kar sakte ho?", options: ["High contrast se", "Detailed excel se", "Lamba speech se", "Chup rehkar"], correct: 0, explanation: "High contrast aur visuals croc brain ko jaldi pasand aate hain." },
+            { question: "STRONG mein 'T' kya hai?", options: ["Take time", "Tell the Story", "Talk loudly", "Test them"], correct: 1, explanation: "T ka matlab hai Tell the story, narrative built karna." },
+            { question: "Curiosity develop karne wala component kaunsa hai?", options: ["R - Reveal the Intrigue", "O - Offer Prize", "S - Set frame", "G - Get deal"], correct: 0, explanation: "Intrigue se samne wala further janne ko utsuk hota hai." },
+            { question: "Neocortex kya karta hai?", options: ["First filter karta hai", "Complex data process karta hai", "Basic survival dekhta hai", "Decisions prevent karta hai"], correct: 1, explanation: "Neocortex advanced logic aur data samajhta hai, magar pehle alert hona zaruri hai." },
+            { question: "Novelty (Nayi cheezein) kyun zaruri hai?", options: ["Croc brain attention deta hai", "Samajhne me mushkil hoti hai", "Yeh rule hai", "Log bore nahi honge"], correct: 0, explanation: "Novelty croc brain ko alert karti hai." },
+            { question: "STRONG mein 'Hookpoint' ka matlab kya hai?", options: ["Physical touch", "Attention capture", "Deal sign", "Investment milna"], correct: 1, explanation: "Hookpoint woh pal hai jab wo aapse agree hone lagte hain aur aage jhookte hain." },
+            { question: "Croc brain ke liye danger signals kyu imp hai?", options: ["Because wo survival threats dhundhta hai", "Kyuki usko maza aata hai", "Logic samajhta hai", "Kuch imp nahi hai"], correct: 0, explanation: "Survival mode active rehta hai isliye danger signals uspe asar karte hain." },
+            { question: "Prizing framework mein kisko prize maante hain?", options: ["Investor ko", "Idea ko", "Aapko (Founder ko)", "Product ko"], correct: 2, explanation: "Aap khid ek prize hai jo samne wale ke paas chance hai lene ka." },
+            { question: "Oren Klaff ka 'pitching' ke baare mein core insight kya tha?", options: ["It is a numbers game", "It is brain science", "It is luck", "It is about slide design"], correct: 1, explanation: "Oren ne isey brain science ka format banaya hai." },
+            { question: "STRONG method mein 'G' kya hai?", options: ["Get the deal", "Go home", "Give up", "Generate leads"], correct: 0, explanation: "G ka matlab heh 'Get the deal' (deal finalise karna)." },
+            { question: "Agar pitch Croc brain ko pasand na aaye toh kya hoga?", options: ["Agli stage mein jayegi", "Wo invest karenge", "Message reject ho jayega", "Croc brain band ho jayega"], correct: 2, explanation: "Message reject ho jayega aur neocortex tak jayega hi nahi." },
+            { question: "Croc brain ko satisfy karne ke liye pitch kaisi honi chahiye?", options: ["Short and high contrast", "Long and detailed", "Boring and safe", "Logical and complex"], correct: 0, explanation: "Short, crisp, aur high contrast croc brain ko appeal karta hai." }
+        ]
     },
-    // --- Chapter 2 ---
+// --- Chapter 2 ---
     {
         title: 'Frame Control',
         subtitle: 'Jiska frame jeeta, wohi jeeta. Apna frame set aur hold karna seekho.',
