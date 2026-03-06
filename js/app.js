@@ -1940,6 +1940,84 @@ function resetProgress() {
 }
 
 // ==========================================================
+//  NEW TOOLS (FLASHCARDS & PITCH BUILDER)
+// ==========================================================
+
+function renderMasterFlashcards() {
+    closeSidebar();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    let html = `
+        <div class="chapter-header">
+            <h1 class="chapter-title"><i class="fas fa-layer-group"></i> Master Flashcards</h1>
+            <p class="chapter-subtitle">Saare chapters ke main concepts ki revision</p>
+        </div>
+        <div class="section-card">
+            <div class="examples-grid">
+    `;
+
+    chaptersData.forEach(ch => {
+        html += `<div class="example-card">
+            <h4><i class="${ch.icon}"></i> Ch ${ch.chapterId}: ${ch.title}</h4>
+            <p><strong>Core Concept:</strong> ${ch.subtitle}</p>
+        </div>`;
+    });
+
+    html += `</div></div>`;
+    DOM.contentArea.innerHTML = html;
+}
+
+function renderPitchBuilder() {
+    closeSidebar();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    let savedPitch = JSON.parse(localStorage.getItem('myCustomPitch') || '{}');
+
+    let html = `
+        <div class="chapter-header">
+            <h1 class="chapter-title"><i class="fas fa-hammer"></i> Pitch Builder</h1>
+            <p class="chapter-subtitle">Apni actual pitch banayein aur STRONG framework mein test karein</p>
+        </div>
+        <div class="section-card pitch-builder-form">
+            <label>1. Croc Brain Hook</label>
+            <textarea id="pb-1" placeholder="High-contrast metrics ya surprising element...">${savedPitch.pb1 || ''}</textarea>
+            
+            <label>2. Set the Frame</label>
+            <textarea id="pb-2" placeholder="Agar buyer power frame use kare, toh kaise counter karoge?...">${savedPitch.pb2 || ''}</textarea>
+            
+            <label>3. Tell the Story</label>
+            <textarea id="pb-3" placeholder="Apni brief engaging narrative...">${savedPitch.pb3 || ''}</textarea>
+            
+            <label>4. Reveal the Intrigue</label>
+            <textarea id="pb-4" placeholder="Curiosity paida karne ke liye kya hide karoge...">${savedPitch.pb4 || ''}</textarea>
+            
+            <label>5. Offer the Prize</label>
+            <textarea id="pb-5" placeholder="Kaise show karoge ki aap ek opportunity (prize) ho?...">${savedPitch.pb5 || ''}</textarea>
+
+            <label>6. Nail the Hookpoint & Get the Deal</label>
+            <textarea id="pb-6" placeholder="Final close aur action step...">${savedPitch.pb6 || ''}</textarea>
+
+            <button class="btn-primary" style="margin-top:20px;" onclick="savePitchBuilder()">Save My Pitch</button>
+        </div>
+    `;
+    DOM.contentArea.innerHTML = html;
+}
+
+window.savePitchBuilder = function() {
+    let data = {
+        pb1: document.getElementById('pb-1').value,
+        pb2: document.getElementById('pb-2').value,
+        pb3: document.getElementById('pb-3').value,
+        pb4: document.getElementById('pb-4').value,
+        pb5: document.getElementById('pb-5').value,
+        pb6: document.getElementById('pb-6').value
+    };
+    localStorage.setItem('myCustomPitch', JSON.stringify(data));
+    showToast('Your Pitch has been saved!', 'success');
+};
+
+
+// ==========================================================
 //  EVENT LISTENERS & BOOT
 // ==========================================================
 
